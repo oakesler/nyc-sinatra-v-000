@@ -1,0 +1,33 @@
+<h1>Edit Historical Figure</h1>
+
+<h2>Edits for <%= @figure.name %></h2>
+ 
+  <form action="/figures/<%=@figure.id %>" method="POST">
+    
+    <input id="hidden" type="hidden" name="_method" value="patch">
+    <label>Edit the Figure's Name:</label>
+    <br>
+    <input type="text" name="figure[name]" value="<%= @figure.name %>">
+ 
+    <br>
+    <p>Select an existing title or create a new one below.</p>
+
+    <h3>Existing Titles</h3>
+      
+      <% @titles.each do |item| %>
+        <input type="checkbox" name="figure[title_ids][]" id="title_<%=item.id%>" value="<%=item.id%>"><%='checked' if @figure.titles include?(item)%></input><br>
+      <% end %>
+    <br>
+    
+    <h3>New Title</h3>
+      <label>Title: </label>
+    <br>
+
+    <input type="text" name="title[name]" id="title_name"></input>
+  <br><br>
+ 
+    <input type="submit" value="Update Owner">
+  </form>
+  
+<a class="button" href="/figures">Figures</a>
+<a class="button" href="/">Home</a>
