@@ -1,21 +1,19 @@
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Year Completed</th>
-  </tr>
-  <tr>
-    <td><%= @figure.name %></td>
-    <td><%= @figure.title %></td>
-  </tr>
-<table>
-  
-  <h2>Create New Figure</h2>
-  
-  <form action="/figures" method="POST">
-    <input type="text" name= "figure[name]" placeholder="Name:">
-    <input type="submit" value="Submit">
-  </form>
-  
-
-<a class="button" href="/landmarks/<%= @landmark.id %>/edit">Edit Landmark</a>
-<a class="button" href="/landmarks">Landmarks</a>
+<html>
+  <body>
+    <table>
+      <tr>
+        <td><%= @figure.name %></td>
+        <td><%= @figure.title %></td>
+      </tr>
+    <table>
+      
+    <h2>Create New Figure</h2>
+    <form action="/figures" method="POST">
+      <input type="text" name= "figure[name]" placeholder="Name:">
+      <input type="submit" value="Submit">
+    </form>
+    
+    <a class="button" href="/landmarks">Landmarks</a>
+    <a class="button" href="/">Home</a>
+  </body>
+</html>
