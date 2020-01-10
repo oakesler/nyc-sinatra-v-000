@@ -1,4 +1,5 @@
 class FiguresController < ApplicationController
+  
   get '/figures' do 
     erb :"figures/index"
   end
@@ -8,8 +9,8 @@ class FiguresController < ApplicationController
   end
   
   post '/figures' do
-    @figure = Figure.new[name: params[name]]
-    redirect to "/figures/#{params[:id]}"
+    @figure = Figure.new[name: params["name"]]
+    redirect to "/figures/#{@figure.id]}"
   end
   
   get '/figures/:id' do 
