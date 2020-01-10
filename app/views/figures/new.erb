@@ -12,12 +12,14 @@
     <input type="checkbox" name="figure[title_ids][]" id="<%=item.id%>" value="<%=item.id %>"><%=item.name%></input><br>
   <% end %>
   <br>
+  
+  <p><%=@titles.last.id.to_i + 1%></p>
  
   <h3>New Title</h3>
   <label>Title: </label>
   <br>
 
-  <input type="text" name="title[name]" id="title_name"></input>
+  <input type="text" name="title[name]" id="title_<%=@titles.last.id + 1%>"></input>
   <br><br>
  
   <input type="submit" value="Create Title">
@@ -42,13 +44,3 @@
 
 <a class="button" href="/landmarks">Landmarks</a>
 <a class="button" href="/">Home</a>
-
-<%#it "allows you to view form to create a new figure" do
-    visit '/figures/new'
-    expect(page.body).to include('<form')
-    expect(page.body).to include('figure[name]')
-    expect(page.body).to include('figure[title_ids][]')
-    expect(page.body).to include('figure[landmark_ids][]')
-    expect(page.body).to include('landmark[name]')
-    expect(page.body).to include('title[name]')
-  end
