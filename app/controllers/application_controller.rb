@@ -19,5 +19,15 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/figures/new' do 
-    erb :"figures/"
+    erb :"figures/new"
+  end
+  
+  post '/figures' do
+    @figure = Figure.new[name: params[name]]
+    redirect to "/figures/#{params[:id]}"
+  end
+  
+  get '/figures/:id' do 
+    @figure = Figure.all.find(params[:id])
+    erb :"figures/show"
 end
