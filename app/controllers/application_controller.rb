@@ -10,9 +10,9 @@ class ApplicationController < Sinatra::Base
     #erb :"figures/index"
   #end
   
-  get '/landmarks' do
-    erb :"landmarks/index"
-  end
+  #get '/landmarks' do
+    #erb :"landmarks/index"
+  #end
   
   get '/titles' do 
     erb :"titles/index"
