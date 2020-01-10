@@ -1,10 +1,27 @@
 <h2>Create New Figure</h2>
 
 <form action="/figures" method="POST">
-  <input type="text" name= "figure[name]" placeholder="Name:">
+  <input type="text" name= "figure[name]" id="figure_name" placeholder="Name:">
   <input type="submit" value="Submit">
 </form>
 
+<p>Select an existing title or create a new one below.</p>
+
+  <h3>Existing Titles </h3>
+  <% @titles.each do |item| %>
+    <input type="checkbox" name="figure[title_ids][]" id="<%=item.id%>" value="<%=item.id %>"><%=item.name%></input><br>
+  <% end %>
+  <br>
+ 
+  <h3>New Title</h3>
+  <label>Title: </label>
+  <br>
+
+  <input type="text" name="title[name]" id="title_name"></input>
+  <br><br>
+ 
+  <input type="submit" value="Create Title">
+</form>
 
   <p>Select an existing landmark or create a new one below.</p>
  
@@ -23,16 +40,15 @@
   <input type="submit" value="Create Landmark">
 </form>
 
-
-
-
-
-
-
-
-
-
-<!-- add content here -->
-
 <a class="button" href="/landmarks">Landmarks</a>
 <a class="button" href="/">Home</a>
+
+<%#it "allows you to view form to create a new figure" do
+    visit '/figures/new'
+    expect(page.body).to include('<form')
+    expect(page.body).to include('figure[name]')
+    expect(page.body).to include('figure[title_ids][]')
+    expect(page.body).to include('figure[landmark_ids][]')
+    expect(page.body).to include('landmark[name]')
+    expect(page.body).to include('title[name]')
+  end
