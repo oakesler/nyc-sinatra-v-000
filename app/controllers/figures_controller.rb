@@ -42,20 +42,6 @@ class FiguresController < ApplicationController
     erb :'/figures/edit'
   end
   
-  
-  patch '/owners/:id' do
-    if !params[:owner].keys.include?("pet_ids")
-      params[:owner]["pet_ids"] = []
-    end
-    @owner = Owner.find(params[:id])
-    @owner.update(params["owner"])
-    if !params["pet"]["name"].empty?
-      @owner.pets << Pet.create(name: params["pet"]["name"])
-    end
-    redirect "owners/#{@owner.id}"
-  end
-  
-  
   patch '/figures/:id' do
     if !params[:figure].keys.include?("title_ids")
       params[:figure]["title_ids"] = []

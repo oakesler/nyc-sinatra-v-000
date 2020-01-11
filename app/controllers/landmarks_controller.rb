@@ -27,13 +27,21 @@ class LandmarksController < ApplicationController
   end
   
    patch '/landmarks/:id' do
-    if !params[:la].keys.include?("title_ids")
-      params[:owner]["title_ids"] = []
+    if !params[:figure].keys.include?("title_ids")
+      params[:figure]["title_ids"] = []
     end
     @figure = Figure.find(params[:id])
     @figure.update(params["figure"])
     if !params["title"]["id"].empty?
       @figure.titles << Title.create(name: params["title"]["name"])
+    end
+    if !params[:figure].keys.include?("landmark_ids")
+      params[:figure]["landmark_ids"] = []
+    end
+    @figure = Figure.find(params[:id])
+    @figure.update(params["figure"])
+    if !params["landmark"]["id"].empty?
+      @figure.landmarks << Landmark.create(name: params["title"]["name"])
     end
     redirect to "/figures/#{@figure.id}"
   end
