@@ -1,7 +1,9 @@
 class LandmarksController < ApplicationController
+  
   get '/landmarks' do
     #binding.pry
     @landmarks = Landmark.all
+    @boo = "Boo!!"
     erb :"landmarks/index"
   end
   
@@ -10,7 +12,6 @@ class LandmarksController < ApplicationController
   end
   
   post '/landmarks' do
-    #binding.pry
     @landmark = Landmark.create(name: params["landmark"]["name"], year_completed: params["landmark"]["year_completed"])
     @landmark.save
     redirect to "/landmarks/#{@landmark.id}"

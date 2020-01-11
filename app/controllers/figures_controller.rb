@@ -21,4 +21,16 @@ class FiguresController < ApplicationController
     @figure = Figure.all.find(params[:id])
     erb :"figures/show"
   end
+  
+  patch '/figures/:id' do
+    if !params[:figure].keys.include?("title_ids")
+      params[:owner]["title_ids"] = []
+    end
+    @figure = Figure.find(params[:id])
+    @figure.update(params["figure"])
+    if !params["title"]["id"].empty?
+      @figure.titles << Title.create(name: params["title"]["name"])
+    end
+    redirect "figures/#{@figure.id}"
+  end
 end

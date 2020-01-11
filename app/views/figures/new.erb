@@ -22,7 +22,11 @@
  
   <h3>Existing Landmarks</h3>
   <% @landmarks.each do |item| %>
+<<<<<<< HEAD
     <input type="checkbox" name="figure[landmark_ids][]" id="landmark_<%=item.id%>" value="<%=item.id%>"><%=item.name%></input><br>
+=======
+    <input type="checkbox" name="figure[landmark_ids][]" id="<%=item.id%>" value="<%=item.id%>"><%=item.name%></input><br>
+>>>>>>> c2fd56146d3e75c9ee66cd4cda6143cc46cb7b9a
   <% end %>
   <br>
  
