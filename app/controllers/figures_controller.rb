@@ -2,13 +2,13 @@ class FiguresController < ApplicationController
   
   get '/figures' do 
     @figures = Figure.all
-    erb :"figures/index"
+    erb :"/figures/index"
   end
   
   get '/figures/new' do
     @landmarks = Landmark.all
     @titles = Title.all
-    erb :"figures/new"
+    erb :"/figures/new"
   end
   
   post '/figures' do
@@ -32,25 +32,47 @@ class FiguresController < ApplicationController
   
   get '/figures/:id' do 
     @figure = Figure.find(params[:id])
-    erb :"figures/show"
+    erb :"/figures/show"
   end
   
-  get 'figures/:id/edit' do 
+  get '/figures/:id/edit' do 
     @figure = Figure.find(params[:id])
     @landmarks = Landmark.all 
     @titles = Title.all
     erb :'/figures/edit'
   end
   
+  
+  patch '/owners/:id' do
+    if !params[:owner].keys.include?("pet_ids")
+      params[:owner]["pet_ids"] = []
+    end
+    @owner = Owner.find(params[:id])
+    @owner.update(params["owner"])
+    if !params["pet"]["name"].empty?
+      @owner.pets << Pet.create(name: params["pet"]["name"])
+    end
+    redirect "owners/#{@owner.id}"
+  end
+  
+  
   patch '/figures/:id' do
     if !params[:figure].keys.include?("title_ids")
-      params[:owner]["title_ids"] = []
+      params[:figure]["title_ids"] = []
     end
     @figure = Figure.find(params[:id])
     @figure.update(params["figure"])
     if !params["title"]["id"].empty?
       @figure.titles << Title.create(name: params["title"]["name"])
     end
-    redirect "figures/#{@figure.id}"
+    if !params[:figure].keys.include?("landmark_ids")
+      params[:figure]["landmark_ids"] = []
+    end
+    @figure = Figure.find(params[:id])
+    @figure.update(params["figure"])
+    if !params["landmark"]["id"].empty?
+      @figure.landmarks << Landmark.create(name: params["title"]["name"])
+    end
+    redirect to "/figures/#{@figure.id}"
   end
 end
