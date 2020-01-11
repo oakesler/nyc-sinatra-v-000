@@ -6,15 +6,15 @@ class FiguresController < ApplicationController
   end
   
   get '/figures/new' do
-    #binding.pry
     @landmarks = Landmark.all
     @titles = Title.all
     erb :"figures/new"
   end
   
   post '/figures' do
-    #binding.pry
-    @figure = Figure.new[name: params["figure"]["name"]]
+    binding.pry 
+    @figure = Figure.create(name: params["figure"]["name"], title_ids: params["figure"]["title_ids"])
+    @figure.save
     redirect to "/figures/#{@figure.id}"
   end
   
