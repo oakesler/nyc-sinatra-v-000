@@ -5,6 +5,7 @@ class ApplicationController < Sinatra::Base
   get '/' do
     erb :"application/index"
   end
+end
   
   #get '/figures' do 
     #erb :"figures/index"
@@ -14,9 +15,9 @@ class ApplicationController < Sinatra::Base
     #erb :"landmarks/index"
   #end
   
-  get '/titles' do 
-    erb :"titles/index"
-  end
+  #get '/titles' do 
+    #erb :"titles/index"
+  #end
   
   #get '/figures/new' do 
     #erb :"figures/new"
@@ -31,4 +32,4 @@ class ApplicationController < Sinatra::Base
     #@figure = Figure.all.find(params[:id])
     #erb :"figures/show"
   #end
-end
+
