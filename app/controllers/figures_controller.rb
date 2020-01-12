@@ -12,6 +12,7 @@ class FiguresController < ApplicationController
   end
   
   post '/figures' do
+    
     @figure = Figure.create(name: params["figure"]["name"])
     if params["title"]["name"] != ""
       @title = Title.create(name: params["title"]["name"])
@@ -27,6 +28,7 @@ class FiguresController < ApplicationController
     else 
       @figure.landmark_ids << params["figure"]["landmark_ids"]
     end
+    @figure.save
     redirect to "/figures/#{@figure.id}"
   end
   
@@ -43,6 +45,7 @@ class FiguresController < ApplicationController
   end
   
   patch '/figures/:id' do
+    
     if !params[:figure].keys.include?("title_ids")
       params[:figure]["title_ids"] = []
     end
@@ -60,5 +63,40 @@ class FiguresController < ApplicationController
       @figure.landmarks << Landmark.create(name: params["title"]["name"])
     end
     redirect to "/figures/#{@figure.id}"
+  end
+end
+
+
+class OwnersController < ApplicationController
+
+  post '/owners' do 
+    @owner = Owner.create(params[:owner])
+    if !params["pet"]["name"].empty?
+      @owner.pets << Pet.create(name: params["pet"]["name"])
+    end
+    redirect "owners/#{@owner.id}"
+  end
+
+  get '/owners/:id/edit' do 
+    @owner = Owner.find(params[:id])
+    @pets = Pet.all
+    erb :'/owners/edit'
+  end
+
+  get '/owners/:id' do 
+    @owner = Owner.find(params[:id])
+    erb :'/owners/show'
+  end
+
+  patch '/owners/:id' do
+    if !params[:owner].keys.include?("pet_ids")
+      params[:owner]["pet_ids"] = []
+    end
+    @owner = Owner.find(params[:id])
+    @owner.update(params["owner"])
+    if !params["pet"]["name"].empty?
+      @owner.pets << Pet.create(name: params["pet"]["name"])
+    end
+    redirect "owners/#{@owner.id}"
   end
 end
