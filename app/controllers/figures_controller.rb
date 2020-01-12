@@ -14,17 +14,21 @@ class FiguresController < ApplicationController
     @figure = Figure.create(name: params["figure"]["name"])
     @figure.save
     if params["title"]["name"] == ""
-      @figure.titles << params["figure"]["title_ids"]
-    else 
+      params["figure"]["title_ids"].each do |item|
+        @figure.titles << item.to_i 
+      end
+    else
       @title = Title.create(name: params["title"]["name"])
-      @figure.titles << @title.id
+      @figure.titles << @title.id.to_i
     end
-    binding.pry
+    binding.pry 
     if params["landmark"]["name"] != ""
-      @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id)
+      @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id.to_i)
     else 
-      @landmark = Landmark.find(params["figure"]["landmark_ids"])
-      @landmark.figure_id << @figure.id
+      params["figure"]["landmark_ids"].each do |item|
+        @landmark = Landmark.find(item)
+        @landmark.figure_id << @figure.id.to_i
+      end
     end 
   end
   
