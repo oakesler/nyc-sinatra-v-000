@@ -1,7 +1,7 @@
 class LandmarksController < ApplicationController
-  class LandmarksController < ApplicationController
   
   get '/landmarks' do
+    #binding.pry
     @landmarks = Landmark.all
     erb :"landmarks/index"
   end
@@ -32,5 +32,4 @@ class LandmarksController < ApplicationController
     @landmark.save
     redirect "landmark/#{@landmark.id}"
   end
-end
 end

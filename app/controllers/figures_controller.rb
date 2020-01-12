@@ -12,7 +12,6 @@ class FiguresController < ApplicationController
   
   post '/figures' do
     @figure = Figure.create(name: params["figure"]["name"])
-    @figure.save
     if params["title"]["name"] == ""
       params["figure"]["title_ids"].each do |item|
         @figure.titles << item.to_i 
@@ -21,7 +20,6 @@ class FiguresController < ApplicationController
       @title = Title.create(name: params["title"]["name"])
       @figure.titles << @title.id.to_i
     end
-    binding.pry 
     if params["landmark"]["name"] != ""
       @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id.to_i)
     else 
@@ -29,7 +27,7 @@ class FiguresController < ApplicationController
         @landmark = Landmark.find(item)
         @landmark.figure_id << @figure.id.to_i
       end
-    end 
+    end
   end
   
   get '/figures/:id' do 
