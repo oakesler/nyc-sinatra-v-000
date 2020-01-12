@@ -12,22 +12,20 @@ class FiguresController < ApplicationController
   
   post '/figures' do
     @figure = Figure.create(name: params["figure"]["name"])
-    if params["title"]["name"] != ""
-      @title = Title.create(name: params["title"]["name"])
-      @title.save
-      @figure.title_ids << @title.id
-    else
-      @figure.title_ids << params["figure"]["title_ids"]
-    end
-    if params["landmark"]["name"] != ""
-      @landmark = Landmark.create(name:params["landmark"]["name"])
-      @landmark.save
-      @figure.landmark_ids << @landmark.id
-    else 
-      @figure.landmark_ids << params["figure"]["landmark_ids"]
-    end
     @figure.save
-    redirect to "/figures/#{@figure.id}"
+    if params["title"]["name"] == ""
+      @figure.titles << params["figure"]["title_ids"]
+    else 
+      @title = Title.create(name: params["title"]["name"])
+      @figure.titles << @title.id
+    end
+    binding.pry
+    if params["landmark"]["name"] != ""
+      @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id)
+    else 
+      @landmark = Landmark.find(params["figure"]["landmark_ids"])
+      @landmark.figure_id << @figure.id
+    end 
   end
   
   get '/figures/:id' do 
