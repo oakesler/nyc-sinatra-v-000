@@ -58,12 +58,30 @@ class FiguresController < ApplicationController
       @figure.update(a)
     end
     b = {}
-    if @figure
+    if params[:figure].keys.include?("title_ids")
+      b[:title_ids] = params["figure"]["title_ids"]
+      @figure.update(b)
+    end
+    if params["figure"]["title"] != ""
+      @figure.titles << Title.new(name: params["figure"]["title"])
+    end
+    c = {}
+    if @landmark.name != params["landmark"]["name"]
+      c[:name] = params["landmark"]["name"]
+      @landmark.update(c)
+    end
+    d = {}
+    if params[:figure].keys.include?("landmark_ids")
+      b[:title_ids] = params["figure"]["title_ids"]
+      @figure.update(b)
+    end
+      
   end
 end
     
     
-    
+
+
     
     
     
