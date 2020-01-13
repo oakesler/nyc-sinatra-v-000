@@ -29,9 +29,11 @@ class FiguresController < ApplicationController
       @landmark.save
     end
     if params["figure"]["landmark_ids"].length > 0
+      #binding.pry
       params["figure"]["landmark_ids"].each do |id|
         @landmark = Landmark.find(id)
-        @landmark.update(figure_id: params[:id])
+        #@landmark.update(figure_id: params[:id])
+        @landmark.update(figure_id: @figure.id)
         @landmark.save
       end
     end
