@@ -71,11 +71,14 @@ class FiguresController < ApplicationController
       @landmark.update(c)
     end
     d = {}
+    d[:figure_id] = params[:id]
     if params[:figure].keys.include?("landmark_ids")
-      b[:title_ids] = params["figure"]["title_ids"]
-      @figure.update(b)
+      params["figure"]["landmark_ids"].each do |item|
+        x = Landmark.find(item)
+        x.update(d)
+      end
     end
-      
+    redirect "/figures/#{@figure.id}"
   end
 end
     
