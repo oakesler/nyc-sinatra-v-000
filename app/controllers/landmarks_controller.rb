@@ -1,7 +1,6 @@
 class LandmarksController < ApplicationController
   
   get '/landmarks' do
-    #binding.pry
     @landmarks = Landmark.all
     erb :"landmarks/index"
   end
@@ -28,10 +27,9 @@ class LandmarksController < ApplicationController
   end
   
   patch '/landmarks/:id' do
-    binding.pry
     @landmark = Landmark.find(params[:id])
     @landmark.update(params["landmark"])
     @landmark.save
-    redirect "landmark/#{@landmark.id}"
+    redirect "landmarks/#{@landmark.id}"
   end
 end
