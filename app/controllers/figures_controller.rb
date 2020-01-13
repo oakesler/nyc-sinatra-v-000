@@ -22,16 +22,16 @@ class FiguresController < ApplicationController
       @title = Title.create(name: params["title"]["name"])
       @figure.titles << @title
     end
-    binding.pry
-    if !!params["landmark"]["name"].scan(/\w/)
+    #binding.pry
+    if !!"#{params["landmark"]["name"]}".scan(/\w/)
       @landmark = Landmark.create(name: params["landmark"]["name"], year_completed: params["landmark"]["year_completed"], figure_id: @figure.id)
       #@figure.landmark << @landmark
     end
     if params[:figure].keys.include?("landmark_ids")
       params["figure"]["landmark_ids"].each do |item|
         @landmark = Landmark.find(item)
-        @landmark.figure = @figure
-        #@landmark.update(params[:figure])
+        #@landmark.figure = @figure
+        @landmark.update(params[:figure])
       end
     end
     redirect to "/figures/#{@figure.id}"
