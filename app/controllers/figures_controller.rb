@@ -12,29 +12,30 @@ class FiguresController < ApplicationController
   
   post '/figures' do
     @figure = Figure.create(name: params["figure"]["name"])
-    #binding.pry
-    if params["figure"]["title_ids"] != ""
+    #if params["figure"]["title_ids"] != ""
+    if params[:figure].keys.include?("title_ids")
       params["figure"]["title_ids"].each do |item|
         @title = Title.find(item)
         @figure.titles << @title
       end
-    elsif params["title"]["name"] != ""
+    end
+    if params["title"]["name"] != ""
       @title = Title.create(name: params["title"]["name"])
-      @figure.titles << @title.id
-    else 
-      @figure.save 
+      @figure.titles << @title
     end
     if !!params["landmark"]["name"].scan(/\w/) != ""
       @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id)
-      elsif params["figure"]["landmark_ids"].count > 0 
+    end
+    if params[:figure].keys.include?("landmark_ids")
+      #elsif params["figure"]["landmark_ids"].count > 0 
       params["figure"]["landmark_ids"].each do |item|
         @landmark = Landmark.find(item)
-        @landmark.figure_id << @figure.id
-      end
-    else 
-      @figure.save
+        @landmark.figure = @figure
+        #@landmark.update(params[:figure])
       end
     end
+    redirect to "/figures/#{@figure.id}"
+  end
   
   get '/figures/:id' do
     @figure = Figure.find(params[:id])
@@ -49,7 +50,6 @@ class FiguresController < ApplicationController
   end
   
   patch '/figures/:id' do
-    binding.pry
     a = {}
     @figure = Figure.find(params[:id])
     @landmark = Landmark.find_by(figure_id: params[:id])
