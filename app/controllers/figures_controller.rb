@@ -36,10 +36,10 @@ class FiguresController < ApplicationController
       end
     end
   
-  #get '/figures/:id' do
-    #@figure = Figure.find(params[:id])
-    #erb :"/figures/show"
-  #end
+  get '/figures/:id' do
+    @figure = Figure.find(params[:id])
+    erb :"/figures/show"
+  end
   
   get '/figures/:id/edit' do 
     @figure = Figure.find(params[:id])
@@ -48,11 +48,10 @@ class FiguresController < ApplicationController
     erb :'/figures/edit'
   end
   
-  get '/figures/:id' do
-    binding.pry
-    @figure = Figure.find(params[:id])
-    erb :"/figures/show"
-  end
+  #get '/figures/:id' do
+    #@figure = Figure.find(params[:id])
+    #erb :"/figures/show"
+  #end
   
   patch '/figures/:id' do
     if !params[:figure].keys.include?("title_ids")
