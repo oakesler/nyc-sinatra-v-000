@@ -12,7 +12,6 @@ class FiguresController < ApplicationController
   
   post '/figures' do
     @figure = Figure.create(name: params["figure"]["name"])
-    #if params["figure"]["title_ids"] != ""
     if params[:figure].keys.include?("title_ids")
       params["figure"]["title_ids"].each do |item|
         @title = Title.find(item)
@@ -23,11 +22,12 @@ class FiguresController < ApplicationController
       @title = Title.create(name: params["title"]["name"])
       @figure.titles << @title
     end
-    if !!params["landmark"]["name"].scan(/\w/) != ""
-      @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id)
+    binding.pry
+    if !!params["landmark"]["name"].scan(/\w/)
+      @landmark = Landmark.create(name: params["landmark"]["name"], year_completed: params["landmark"]["year_completed"], figure_id: @figure.id)
+      #@figure.landmark << @landmark
     end
     if params[:figure].keys.include?("landmark_ids")
-      #elsif params["figure"]["landmark_ids"].count > 0 
       params["figure"]["landmark_ids"].each do |item|
         @landmark = Landmark.find(item)
         @landmark.figure = @figure
