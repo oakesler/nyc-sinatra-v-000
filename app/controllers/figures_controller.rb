@@ -12,18 +12,19 @@ class FiguresController < ApplicationController
   
   post '/figures' do
     @figure = Figure.create(name: params["figure"]["name"])
-    
-    if params["title"]["name"] == ""
+    #binding.pry
+    if params["figure"]["title_ids"] != ""
       params["figure"]["title_ids"].each do |item|
-        @figure.titles << Title.find(item)
+        @title = Title.find(item)
+        @figure.titles << @title
       end
     elsif params["title"]["name"] != ""
       @title = Title.create(name: params["title"]["name"])
       @figure.titles << @title.id
     else 
-      @figure.title = nil 
+      @figure.save 
     end
-    if params["landmark"]["name"] != ""
+    if !!params["landmark"]["name"].scan(/\w/) != ""
       @landmark = Landmark.create(name: params["landmark"]["name"], figure_id: @figure.id)
       elsif params["figure"]["landmark_ids"].count > 0 
       params["figure"]["landmark_ids"].each do |item|
@@ -35,16 +36,22 @@ class FiguresController < ApplicationController
       end
     end
   
-  get '/figures/:id' do 
-    @figure = Figure.find(params[:id])
-    erb :"/figures/show"
-  end
+  #get '/figures/:id' do
+    #@figure = Figure.find(params[:id])
+    #erb :"/figures/show"
+  #end
   
   get '/figures/:id/edit' do 
     @figure = Figure.find(params[:id])
     @landmarks = Landmark.all 
     @titles = Title.all
     erb :'/figures/edit'
+  end
+  
+  get '/figures/:id' do
+    binding.pry
+    @figure = Figure.find(params[:id])
+    erb :"/figures/show"
   end
   
   patch '/figures/:id' do
