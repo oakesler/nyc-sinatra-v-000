@@ -11,6 +11,7 @@ class FiguresController < ApplicationController
   end
   
   post '/figures' do
+    binding.pry
     @figure = Figure.create(name: params["figure"]["name"])
     if params[:figure].keys.include?("title_ids")
       params["figure"]["title_ids"].each do |item|
